@@ -3,131 +3,151 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI-Tutor MVP</title>
+  <title>AI-Tutor | Login y Registro</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
     }
-    header {
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 0.7rem;
+      border: none;
       background-color: #4a90e2;
       color: white;
-      padding: 1em;
-      text-align: center;
-    }
-    nav {
-      background: #333;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      padding: 10px;
-    }
-    nav button {
-      background-color: #fff;
-      border: none;
-      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 4px;
       cursor: pointer;
-      border-radius: 5px;
     }
-    nav button:hover {
-      background-color: #ddd;
+    button:hover {
+      background-color: #3b7dd8;
     }
-    section {
-      display: none;
-      padding: 2em;
-      max-width: 800px;
-      margin: auto;
-    }
-    section.active {
-      display: block;
-    }
-    .card {
-      background-color: white;
-      padding: 1.5em;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .chart {
-      background-color: #eaf2ff;
-      padding: 1em;
-      margin-top: 1em;
-      border-radius: 8px;
+    .message {
       text-align: center;
+      margin-top: 1rem;
+      color: red;
+    }
+    .success {
+      color: green;
+    }
+    .toggle {
+      text-align: center;
+      margin-top: 1rem;
+      color: #007bff;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .toggle:hover {
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>AI-Tutor MVP</h1>
-  </header>
-
-  <nav>
-    <button onclick="showSection('registro')">Registro</button>
-    <button onclick="showSection('diagnostico')">Diagnóstico</button>
-    <button onclick="showSection('explicaciones')">Explicaciones IA</button>
-    <button onclick="showSection('progreso')">Progreso</button>
-  </nav>
-
-  <section id="registro" class="active">
-    <div class="card">
-      <h2>Registro de Usuario</h2>
-      <form>
-        <label for="email">Correo electrónico:</label><br>
-        <input type="email" id="email" name="email" placeholder="correo@ejemplo.com"><br><br>
-        <button type="submit">Registrarse</button>
-      </form>
-    </div>
-  </section>
-
-  <section id="diagnostico">
-    <div class="card">
-      <h2>Diagnóstico Académico</h2>
-      <p>Responde las siguientes preguntas para conocer tu nivel:</p>
-      <ul>
-        <li>2x + 3 = 7. Resuelve para x.</li>
-        <li>¿Qué es una mitocondria?</li>
-        <li>Escribe una oración en inglés usando el pasado simple.</li>
-      </ul>
-      <div class="chart">
-        <strong>Gráfica de Nivel:</strong><br>
-        Matemáticas: 60%<br>
-        Biología: 80%<br>
-        Inglés: 50%
+  <div class="container" id="auth-container">
+    <h2 id="form-title">Iniciar Sesión</h2>
+    <form id="auth-form">
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" required>
       </div>
-    </div>
-  </section>
-
-  <section id="explicaciones">
-    <div class="card">
-      <h2>Explicaciones Personalizadas (IA)</h2>
-      <p>Basado en tus errores, la IA sugiere:</p>
-      <div class="chart">
-        <strong>Explicación:</strong><br>
-        "Para resolver 2x + 3 = 7, primero resta 3 a ambos lados, luego divide entre 2. Resultado: x = 2"
+      <div class="form-group" id="name-group" style="display:none">
+        <label for="name">Nombre</label>
+        <input type="text" id="name">
       </div>
-    </div>
-  </section>
-
-  <section id="progreso">
-    <div class="card">
-      <h2>Panel de Progreso</h2>
-      <p>Aquí puedes ver tu avance general:</p>
-      <div class="chart">
-        <strong>Progreso por área:</strong><br>
-        <progress value="60" max="100"></progress> Matemáticas 60%<br>
-        <progress value="80" max="100"></progress> Biología 80%<br>
-        <progress value="50" max="100"></progress> Inglés 50%
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" required>
       </div>
-    </div>
-  </section>
+      <button type="submit" id="submit-btn">Iniciar Sesión</button>
+    </form>
+    <div class="message" id="message"></div>
+    <div class="toggle" id="toggle-form">¿No tienes cuenta? Regístrate</div>
+  </div>
 
   <script>
-    function showSection(id) {
-      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
+    const form = document.getElementById('auth-form');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const nameGroup = document.getElementById('name-group');
+    const name = document.getElementById('name');
+    const message = document.getElementById('message');
+    const toggle = document.getElementById('toggle-form');
+    const formTitle = document.getElementById('form-title');
+    const submitBtn = document.getElementById('submit-btn');
+
+    let isRegistering = false;
+
+    toggle.addEventListener('click', () => {
+      isRegistering = !isRegistering;
+      nameGroup.style.display = isRegistering ? 'block' : 'none';
+      formTitle.textContent = isRegistering ? 'Registro' : 'Iniciar Sesión';
+      submitBtn.textContent = isRegistering ? 'Registrarse' : 'Iniciar Sesión';
+      toggle.textContent = isRegistering ? '¿Ya tienes cuenta? Inicia Sesión' : '¿No tienes cuenta? Regístrate';
+      message.textContent = '';
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const emailVal = email.value.trim();
+      const passwordVal = password.value.trim();
+
+      if (!emailVal.includes('@')) {
+        message.textContent = 'El correo no es válido';
+        return;
+      }
+
+      if (passwordVal.length < 8 || !/[A-Z]/.test(passwordVal) || !/\d/.test(passwordVal) || !/[!@#$%^&*]/.test(passwordVal)) {
+        message.textContent = 'La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un símbolo.';
+        return;
+      }
+
+      if (isRegistering) {
+        if (!name.value.trim()) {
+          message.textContent = 'Debes ingresar un nombre válido';
+          return;
+        }
+        message.textContent = 'Registro exitoso. Ahora puedes iniciar sesión';
+        message.classList.add('success');
+        form.reset();
+        return;
+      } else {
+        if (emailVal === 'user01@gmail.com' && passwordVal === 'ContraseñaSegura123*') {
+          window.location.href = 'dashboard.html';
+        } else {
+          message.textContent = 'Usuario o contraseña incorrecta';
+        }
+      }
+    });
   </script>
 </body>
 </html>

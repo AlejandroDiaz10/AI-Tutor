@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Tutor | Diagnóstico Académico</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+    }
+    nav {
+      background-color: #333;
+      padding: 1em;
+      display: flex;
+      justify-content: space-around;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 2em;
+      background: white;
+    }
+    h2 {
+      text-align: center;
+    }
+    fieldset {
+      margin-bottom: 2em;
+      border: 1px solid #ccc;
+      padding: 1em;
+      border-radius: 5px;
+    }
+    legend {
+      font-weight: bold;
+    }
+    .result {
+      margin-top: 2em;
+      text-align: center;
+    }
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="dashboard.html">Diagnóstico</a>
+    <a href="explicaciones.html">Explicaciones</a>
+    <a href="progreso.html">Progreso</a>
+    <a href="index.html">Cerrar sesión</a>
+  </nav>
+
+  <div class="container">
+    <h2>Cuestionario Diagnóstico</h2>
+    <form id="quiz-form">
+      <fieldset>
+        <legend>Matemáticas</legend>
+        <label>1. ¿Cuál es el valor de x en 2x + 4 = 10?</label><br>
+        <input type="radio" name="math1" value="a"> x = 3<br>
+        <input type="radio" name="math1" value="b"> x = 2<br>
+        <input type="radio" name="math1" value="c"> x = 5<br>
+        <input type="radio" name="math1" value="d"> x = 4<br><br>
+        <label>2. ¿Cuánto es la derivada de x²?</label><br>
+        <input type="radio" name="math2" value="a"> 1<br>
+        <input type="radio" name="math2" value="b"> 2x<br>
+        <input type="radio" name="math2" value="c"> x<br>
+        <input type="radio" name="math2" value="d"> 0<br><br>
+      </fieldset>
+      <fieldset>
+        <legend>Biología</legend>
+        <label>1. ¿Dónde ocurre la fotosíntesis?</label><br>
+        <input type="radio" name="bio1" value="a"> En el citoplasma<br>
+        <input type="radio" name="bio1" value="b"> En el cloroplasto<br>
+        <input type="radio" name="bio1" value="c"> En el ribosoma<br>
+        <input type="radio" name="bio1" value="d"> En la mitocondria<br><br>
+        <label>2. ¿Cuál es la función del ADN?</label><br>
+        <input type="radio" name="bio2" value="a"> Transportar oxígeno<br>
+        <input type="radio" name="bio2" value="b"> Almacenar información genética<br>
+        <input type="radio" name="bio2" value="c"> Sintetizar proteínas<br>
+        <input type="radio" name="bio2" value="d"> Controlar la digestión<br><br>
+      </fieldset>
+      <fieldset>
+        <legend>Español</legend>
+        <label>1. Señala la oración compuesta:</label><br>
+        <input type="radio" name="span1" value="a"> Saldré cuando acabe la lluvia<br>
+        <input type="radio" name="span1" value="b"> Estudio mucho<br>
+        <input type="radio" name="span1" value="c"> Me gusta leer<br>
+        <input type="radio" name="span1" value="d"> Es tarde<br><br>
+        <label>2. ¿Qué tipo de palabra es "rápidamente"?</label><br>
+        <input type="radio" name="span2" value="a"> Sustantivo<br>
+        <input type="radio" name="span2" value="b"> Verbo<br>
+        <input type="radio" name="span2" value="c"> Adverbio<br>
+        <input type="radio" name="span2" value="d"> Adjetivo<br><br>
+      </fieldset>
+      <fieldset>
+        <legend>Historia</legend>
+        <label>1. ¿En qué año fue el descubrimiento de América?</label><br>
+        <input type="radio" name="hist1" value="a"> 1453<br>
+        <input type="radio" name="hist1" value="b"> 1492<br>
+        <input type="radio" name="hist1" value="c"> 1519<br>
+        <input type="radio" name="hist1" value="d"> 1521<br><br>
+        <label>2. ¿Quién fue el primer emperador romano?</label><br>
+        <input type="radio" name="hist2" value="a"> Julio César<br>
+        <input type="radio" name="hist2" value="b"> Nerón<br>
+        <input type="radio" name="hist2" value="c"> Augusto<br>
+        <input type="radio" name="hist2" value="d"> Trajano<br><br>
+      </fieldset>
+      <button type="submit">Enviar respuestas</button>
+    </form>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    document.getElementById('quiz-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const result = document.getElementById('result');
+      result.innerHTML = '<h3>Resultados:</h3>';
+
+      let total = 8;
+      let correctas = 0;
+
+      if (document.querySelector('input[name="math1"]:checked')?.value === 'a') correctas++;
+      if (document.querySelector('input[name="math2"]:checked')?.value === 'b') correctas++;
+      if (document.querySelector('input[name="bio1"]:checked')?.value === 'b') correctas++;
+      if (document.querySelector('input[name="bio2"]:checked')?.value === 'b') correctas++;
+      if (document.querySelector('input[name="span1"]:checked')?.value === 'a') correctas++;
+      if (document.querySelector('input[name="span2"]:checked')?.value === 'c') correctas++;
+      if (document.querySelector('input[name="hist1"]:checked')?.value === 'b') correctas++;
+      if (document.querySelector('input[name="hist2"]:checked')?.value === 'c') correctas++;
+
+      result.innerHTML += `<p>Has obtenido ${correctas}/${total} respuestas correctas. (${Math.round((correctas/total)*100)}%)</p>`;
+      result.classList.add('success');
+    });
+  </script>
+</body>
+</html>
