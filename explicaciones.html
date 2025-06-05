@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Tutor | Explicaciones Personalizadas</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+    }
+    nav {
+      background-color: #333;
+      padding: 1em;
+      display: flex;
+      justify-content: space-around;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .main {
+      display: flex;
+      flex: 1;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #2c3e50;
+      color: white;
+      padding: 1em;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar h3 {
+      margin-top: 0;
+    }
+    .sidebar button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 0.5em;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .sidebar button:hover,
+    .sidebar button.selected {
+      background-color: #34495e;
+    }
+    .content {
+      flex: 1;
+      padding: 2em;
+      background: white;
+      display: flex;
+      flex-direction: column;
+    }
+    .content h2 {
+      margin-top: 0;
+    }
+    .welcome {
+      margin: 1em 0;
+    }
+    .chat-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1em;
+      background: #fafafa;
+    }
+    .chat-box textarea {
+      width: 100%;
+      resize: none;
+      height: 80px;
+      margin-top: 1em;
+      padding: 0.5em;
+      font-size: 1em;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .chat-box button {
+      align-self: flex-end;
+      margin-top: 1em;
+      padding: 0.6em 1.2em;
+      font-size: 1em;
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .chat-response {
+      margin-top: 1em;
+      background: #e0f7fa;
+      padding: 1em;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="dashboard.html">Diagnóstico</a>
+    <a href="explicaciones.html">Explicaciones</a>
+    <a href="progreso.html">Progreso</a>
+    <a href="index.html">Cerrar sesión</a>
+  </nav>
+  <div class="main">
+    <div class="sidebar">
+      <h3>Conversaciones pasadas</h3>
+      <button>Matemáticas</button>
+      <button>Biología</button>
+      <button>Español</button>
+      <button class="selected">Historia</button>
+    </div>
+    <div class="content">
+      <h2>Historia</h2>
+      <p class="welcome">Hola Juan, con base en tus resultados del cuestionario, ¿quieres revisar algo en particular o descubrir algo nuevo sobre Historia?</p>
+      <div class="chat-box">
+        <textarea id="user-input" placeholder="Escribe tu pregunta aquí..."></textarea>
+        <button onclick="responder()">Enviar</button>
+        <div class="chat-response" id="chat-response" style="display: none;"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function responder() {
+      const input = document.getElementById('user-input').value;
+      const response = document.getElementById('chat-response');
+      if (input.trim()) {
+        response.style.display = 'block';
+        response.innerHTML = `<strong>Excelente pregunta, Juan.</strong><br>Claro, te explico: El descubrimiento de América ocurrió en 1492 cuando Cristóbal Colón, navegante genovés al servicio de los Reyes Católicos de España, llegó al continente americano pensando que había encontrado una nueva ruta hacia Asia. Este evento marcó el inicio de una nueva era de exploración y colonización europea.`;
+      }
+    }
+  </script>
+</body>
+</html>
