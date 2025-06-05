@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Tutor MVP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    header {
+      background-color: #4a90e2;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+    nav {
+      background: #333;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+    }
+    nav button {
+      background-color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    nav button:hover {
+      background-color: #ddd;
+    }
+    section {
+      display: none;
+      padding: 2em;
+      max-width: 800px;
+      margin: auto;
+    }
+    section.active {
+      display: block;
+    }
+    .card {
+      background-color: white;
+      padding: 1.5em;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .chart {
+      background-color: #eaf2ff;
+      padding: 1em;
+      margin-top: 1em;
+      border-radius: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI-Tutor MVP</h1>
+  </header>
+
+  <nav>
+    <button onclick="showSection('registro')">Registro</button>
+    <button onclick="showSection('diagnostico')">Diagnóstico</button>
+    <button onclick="showSection('explicaciones')">Explicaciones IA</button>
+    <button onclick="showSection('progreso')">Progreso</button>
+  </nav>
+
+  <section id="registro" class="active">
+    <div class="card">
+      <h2>Registro de Usuario</h2>
+      <form>
+        <label for="email">Correo electrónico:</label><br>
+        <input type="email" id="email" name="email" placeholder="correo@ejemplo.com"><br><br>
+        <button type="submit">Registrarse</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="diagnostico">
+    <div class="card">
+      <h2>Diagnóstico Académico</h2>
+      <p>Responde las siguientes preguntas para conocer tu nivel:</p>
+      <ul>
+        <li>2x + 3 = 7. Resuelve para x.</li>
+        <li>¿Qué es una mitocondria?</li>
+        <li>Escribe una oración en inglés usando el pasado simple.</li>
+      </ul>
+      <div class="chart">
+        <strong>Gráfica de Nivel:</strong><br>
+        Matemáticas: 60%<br>
+        Biología: 80%<br>
+        Inglés: 50%
+      </div>
+    </div>
+  </section>
+
+  <section id="explicaciones">
+    <div class="card">
+      <h2>Explicaciones Personalizadas (IA)</h2>
+      <p>Basado en tus errores, la IA sugiere:</p>
+      <div class="chart">
+        <strong>Explicación:</strong><br>
+        "Para resolver 2x + 3 = 7, primero resta 3 a ambos lados, luego divide entre 2. Resultado: x = 2"
+      </div>
+    </div>
+  </section>
+
+  <section id="progreso">
+    <div class="card">
+      <h2>Panel de Progreso</h2>
+      <p>Aquí puedes ver tu avance general:</p>
+      <div class="chart">
+        <strong>Progreso por área:</strong><br>
+        <progress value="60" max="100"></progress> Matemáticas 60%<br>
+        <progress value="80" max="100"></progress> Biología 80%<br>
+        <progress value="50" max="100"></progress> Inglés 50%
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+</body>
+</html>
