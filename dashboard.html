@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI-Tutor | Diagnóstico Académico</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -43,11 +44,10 @@
       margin-top: 2em;
       text-align: center;
     }
-    .correct {
-      color: green;
-    }
-    .incorrect {
-      color: red;
+    .chart-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 2em auto;
     }
   </style>
 </head>
@@ -117,6 +117,12 @@
       <button type="submit">Enviar respuestas</button>
     </form>
     <div class="result" id="result"></div>
+    <div class="chart-container">
+      <canvas id="doughnutChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <canvas id="barChart"></canvas>
+    </div>
   </div>
 
   <script>
@@ -125,20 +131,72 @@
       const result = document.getElementById('result');
       result.innerHTML = '<h3>Resultados:</h3>';
 
-      let total = 8;
-      let correctas = 0;
+      const correctas = {
+        matematicas: 0,
+        biologia: 0,
+        espanol: 0,
+        historia: 0
+      };
 
-      if (document.querySelector('input[name="math1"]:checked')?.value === 'a') correctas++;
-      if (document.querySelector('input[name="math2"]:checked')?.value === 'b') correctas++;
-      if (document.querySelector('input[name="bio1"]:checked')?.value === 'b') correctas++;
-      if (document.querySelector('input[name="bio2"]:checked')?.value === 'b') correctas++;
-      if (document.querySelector('input[name="span1"]:checked')?.value === 'a') correctas++;
-      if (document.querySelector('input[name="span2"]:checked')?.value === 'c') correctas++;
-      if (document.querySelector('input[name="hist1"]:checked')?.value === 'b') correctas++;
-      if (document.querySelector('input[name="hist2"]:checked')?.value === 'c') correctas++;
+      if (document.querySelector('input[name="math1"]:checked')?.value === 'a') correctas.matematicas++;
+      if (document.querySelector('input[name="math2"]:checked')?.value === 'b') correctas.matematicas++;
+      if (document.querySelector('input[name="bio1"]:checked')?.value === 'b') correctas.biologia++;
+      if (document.querySelector('input[name="bio2"]:checked')?.value === 'b') correctas.biologia++;
+      if (document.querySelector('input[name="span1"]:checked')?.value === 'a') correctas.espanol++;
+      if (document.querySelector('input[name="span2"]:checked')?.value === 'c') correctas.espanol++;
+      if (document.querySelector('input[name="hist1"]:checked')?.value === 'b') correctas.historia++;
+      if (document.querySelector('input[name="hist2"]:checked')?.value === 'c') correctas.historia++;
 
-      result.innerHTML += `<p>Has obtenido ${correctas}/${total} respuestas correctas. (${Math.round((correctas/total)*100)}%)</p>`;
-      result.classList.add('success');
+      const total = 8;
+      const sumaCorrectas = Object.values(correctas).reduce((a, b) => a + b, 0);
+      const porcentaje = Math.round((sumaCorrectas / total) * 100);
+
+      result.innerHTML += `<p>Has obtenido ${sumaCorrectas}/${total} respuestas correctas. (${porcentaje}%)</p>`;
+
+      new Chart(document.getElementById('doughnutChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Correctas', 'Incorrectas'],
+          datasets: [{
+            data: [sumaCorrectas, total - sumaCorrectas],
+            backgroundColor: ['#4caf50', '#f44336']
+          }]
+        },
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text: 'Resultado Global'
+            }
+          }
+        }
+      });
+
+      new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+          labels: ['Matemáticas', 'Biología', 'Español', 'Historia'],
+          datasets: [{
+            label: 'Respuestas Correctas',
+            data: [correctas.matematicas, correctas.biologia, correctas.espanol, correctas.historia],
+            backgroundColor: '#2196f3'
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 2
+            }
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: 'Resultados por Materia'
+            }
+          }
+        }
+      });
     });
   </script>
 </body>
