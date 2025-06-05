@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Tutor | Panel de Progreso</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    nav {
+      background-color: #333;
+      padding: 1em;
+      display: flex;
+      justify-content: space-around;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 2em;
+      background: white;
+    }
+    h2 {
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2em;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5em;
+      text-align: center;
+    }
+    .chart-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 2em auto;
+    }
+    .mejoras {
+      margin-top: 2em;
+    }
+    .mejoras h3 {
+      margin-bottom: 0.5em;
+    }
+    .mejoras ul {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="dashboard.html">Diagnóstico</a>
+    <a href="explicaciones.html">Explicaciones</a>
+    <a href="progreso.html">Progreso</a>
+    <a href="index.html">Cerrar sesión</a>
+  </nav>
+
+  <div class="container">
+    <h2>Historial de Exámenes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Resultado Global</th>
+          <th>Matemáticas</th>
+          <th>Biología</th>
+          <th>Español</th>
+          <th>Historia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2024-06-01</td>
+          <td>75%</td>
+          <td>75%</td>
+          <td>100%</td>
+          <td>50%</td>
+          <td>75%</td>
+        </tr>
+        <tr>
+          <td>2024-06-15</td>
+          <td>87%</td>
+          <td>100%</td>
+          <td>100%</td>
+          <td>75%</td>
+          <td>75%</td>
+        </tr>
+        <tr>
+          <td>2024-07-01</td>
+          <td>93%</td>
+          <td>100%</td>
+          <td>100%</td>
+          <td>100%</td>
+          <td>75%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="chart-container">
+      <canvas id="lineChart"></canvas>
+    </div>
+
+    <div class="mejoras">
+      <h3>Sugerencias de mejora</h3>
+      <ul>
+        <li><strong>Matemáticas:</strong> Excelente desempeño, sigue practicando con problemas de álgebra avanzada y geometría analítica.</li>
+        <li><strong>Biología:</strong> Bien dominado. Puedes explorar temas sobre biotecnología y genética para ir más allá.</li>
+        <li><strong>Español:</strong> Has mejorado mucho, pero podrías reforzar el uso de conectores lógicos y estructuras de texto argumentativo.</li>
+        <li><strong>Historia:</strong> Tienes muy bien los conceptos de la escuela marxista, pero podrías apoyarte a estudiar temas relacionados a la política colonialista de España y Portugal.</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('lineChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['2024-06-01', '2024-06-15', '2024-07-01'],
+        datasets: [{
+          label: 'Resultado Global (%)',
+          data: [75, 87, 93],
+          borderColor: '#4a90e2',
+          backgroundColor: 'rgba(74, 144, 226, 0.2)',
+          fill: true,
+          tension: 0.2
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Progreso de Exámenes a lo Largo del Tiempo'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
