@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Tutor | Panel de Tutor</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    nav {
+      background-color: #333;
+      padding: 1em;
+      display: flex;
+      justify-content: space-around;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2em;
+      background: white;
+    }
+    h2, h3 {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2em;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.8em;
+      text-align: center;
+    }
+    th {
+      background-color: #e9e9e9;
+    }
+    .action-btn {
+      padding: 0.5em 1em;
+      border: none;
+      background-color: #4a90e2;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .action-btn:hover {
+      background-color: #3b7dd8;
+    }
+    .student-profile {
+      display: none; /* Oculto por defecto */
+      margin-top: 2em;
+      padding: 2em;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fafafa;
+    }
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2em;
+      margin-top: 1em;
+    }
+    .chart-container {
+      width: 100%;
+      max-width: 500px;
+      margin: 1em auto;
+    }
+    .feedback-section {
+      grid-column: 1 / -1; /* Ocupa todo el ancho */
+      margin-top: 1em;
+    }
+    .feedback-section textarea {
+      width: 100%;
+      height: 100px;
+      padding: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 1em;
+    }
+    .progress-up {
+      color: #4caf50;
+      font-weight: bold;
+    }
+    .progress-down {
+      color: #f44336;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#">Panel de Tutor</a>
+    <a href="index.html">Cerrar sesión</a>
+  </nav>
+
+  <div class="container">
+    <h2>Panel de Tutor - Vista General</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre del Estudiante</th>
+          <th>Último Resultado</th>
+          <th>Progreso</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Juan Pérez</td>
+          <td>93%</td>
+          <td class="progress-up">Ascendente &#x2197;</td>
+          <td><button class="action-btn" onclick="toggleProfile('juan-perez')">Ver Detalles</button></td>
+        </tr>
+        <tr>
+          <td>Ana García</td>
+          <td>78%</td>
+          <td class="progress-down">Descendente &#x2198;</td>
+          <td><button class="action-btn" onclick="alert('Funcionalidad no implementada para este usuario.')">Ver Detalles</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div id="juan-perez" class="student-profile">
+      <h3>Perfil Detallado de Juan Pérez</h3>
+      
+      <h4>Historial de Exámenes</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th> <th>Resultado Global</th> <th>Matemáticas</th> <th>Biología</th> <th>Español</th> <th>Historia</th> </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2024-06-01</td> <td>75%</td> <td>75%</td> <td>100%</td> <td>50%</td> <td>75%</td> </tr>
+          <tr>
+            <td>2024-06-15</td> <td>87%</td> <td>100%</td> <td>100%</td> <td>75%</td> <td>75%</td> </tr>
+          <tr>
+            <td>2024-07-01</td> <td>93%</td> <td>100%</td> <td>100%</td> <td>100%</td> <td>75%</td> </tr>
+        </tbody>
+      </table>
+
+      <div class="profile-grid">
+        <div class="chart-container">
+          <h4>Progreso a lo Largo del Tiempo</h4>
+          <canvas id="lineChart"></canvas> </div>
+        <div class="chart-container">
+          <h4>Resultado del Último Diagnóstico</h4>
+          <canvas id="doughnutChart"></canvas> </div>
+      </div>
+      
+      <div class="feedback-section">
+        <h4>Sugerencias generadas por la IA (Lo que ve el estudiante)</h4>
+         <ul>
+            <li><strong>Matemáticas:</strong> ¡Excelente desempeño! Para seguir desafiándote, te sugiero practicar con problemas de álgebra avanzada y explorar la geometría analítica. ¡Sigue así!</li> <li><strong>Biología:</strong> ¡Muy bien dominado! Si quieres ir más allá, puedes explorar temas fascinantes como la biotecnología y los últimos avances en genética.</li> <li><strong>Español:</strong> ¡Has mejorado muchísimo! Para pulir aún más tus habilidades, te recomiendo reforzar el uso de conectores lógicos y practicar con la estructura de textos argumentativos. También, leer y analizar un artículo de opinión a la semana te ayudará a mejorar tu comprensión lectora.</li> <li><strong>Historia:</strong> ¡Vas por excelente camino! Tienes un buen dominio de la escuela marxista. Para ampliar tu perspectiva, podrías estudiar la política colonialista de España y Portugal y crear líneas de tiempo que conecten diferentes eventos históricos. ¡Esto enriquecerá tu análisis!</li> </ul>
+      </div>
+
+      <div class="feedback-section">
+        <h4>Añadir Comentario Personalizado</h4>
+        <textarea placeholder="Escribe aquí tu retroalimentación para Juan..."></textarea>
+        <button class="action-btn">Guardar Comentario</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function toggleProfile(studentId) {
+      const profile = document.getElementById(studentId);
+      if (profile.style.display === 'block') {
+        profile.style.display = 'none';
+      } else {
+        profile.style.display = 'block';
+        // Solo renderizar las gráficas si el perfil se está mostrando para evitar errores
+        renderCharts();
+      }
+    }
+
+    function renderCharts() {
+      // Gráfico de Progreso (Líneas)
+      const lineCtx = document.getElementById('lineChart').getContext('2d');
+      new Chart(lineCtx, {
+        type: 'line',
+        data: {
+          labels: ['2024-06-01', '2024-06-15', '2024-07-01'], //
+          datasets: [{
+            label: 'Resultado Global (%)', //
+            data: [75, 87, 93], //
+            borderColor: '#4a90e2', //
+            tension: 0.2 //
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Progreso de Exámenes' //
+            }
+          },
+          scales: { y: { beginAtZero: true, max: 100 } } //
+        }
+      });
+
+      // Gráfico de Último Resultado (Dona)
+      const doughnutCtx = document.getElementById('doughnutChart').getContext('2d');
+      new Chart(doughnutCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Correctas', 'Incorrectas'], //
+          datasets: [{
+            data: [7, 1], // Simulación basada en 93% del último examen (aprox)
+            backgroundColor: ['#4caf50', '#f44336'] //
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Resultado Global del Último Examen' //
+            }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
