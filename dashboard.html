@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,39 +12,63 @@
       background-color: #f4f4f4;
       margin: 0;
     }
+
     nav {
       background-color: #333;
       padding: 1em;
       display: flex;
       justify-content: space-around;
     }
+
     nav a {
       color: white;
       text-decoration: none;
       font-weight: bold;
     }
+
     .container {
       max-width: 900px;
       margin: auto;
       padding: 2em;
       background: white;
     }
+
     h2 {
       text-align: center;
     }
+
     fieldset {
       margin-bottom: 2em;
       border: 1px solid #ccc;
       padding: 1em;
       border-radius: 5px;
     }
+
     legend {
       font-weight: bold;
     }
+
     .result {
       margin-top: 2em;
       text-align: center;
     }
+
+    .recommendations {
+      margin-top: 2em;
+      padding: 1em;
+      background-color: #eef7ff;
+      border-left: 5px solid #4a90e2;
+    }
+
+    .recommendations h3 {
+      margin-top: 0;
+    }
+
+    .recommendations ul {
+      text-align: left;
+      padding-left: 20px;
+    }
+
     .chart-container {
       width: 100%;
       max-width: 600px;
@@ -51,6 +76,7 @@
     }
   </style>
 </head>
+
 <body>
   <nav>
     <a href="dashboard.html">Diagnóstico</a>
@@ -117,6 +143,7 @@
       <button type="submit">Enviar respuestas</button>
     </form>
     <div class="result" id="result"></div>
+    <div id="recommendations-container"></div>
     <div class="chart-container">
       <canvas id="doughnutChart"></canvas>
     </div>
@@ -126,10 +153,12 @@
   </div>
 
   <script>
-    document.getElementById('quiz-form').addEventListener('submit', function(event) {
+    document.getElementById('quiz-form').addEventListener('submit', function (event) {
       event.preventDefault();
       const result = document.getElementById('result');
+      const recommendationsContainer = document.getElementById('recommendations-container');
       result.innerHTML = '<h3>Resultados:</h3>';
+      recommendationsContainer.innerHTML = '';
 
       const correctas = {
         matematicas: 0,
@@ -152,6 +181,32 @@
       const porcentaje = Math.round((sumaCorrectas / total) * 100);
 
       result.innerHTML += `<p>Has obtenido ${sumaCorrectas}/${total} respuestas correctas. (${porcentaje}%)</p>`;
+
+      let recommendationsHTML = '';
+      if (correctas.matematicas < 2) {
+        recommendationsHTML += `
+          <li><strong>Matemáticas:</strong> ¡No te preocupes, la práctica hace al maestro! Te sugiero revisar los videos sobre cómo despejar variables en ecuaciones y hacer 5 ejercicios diarios de derivadas para fortalecer tu confianza. ¡Tú puedes!</li>`;
+      }
+      if (correctas.biologia < 2) {
+        recommendationsHTML += `
+          <li><strong>Biología:</strong> ¡La biología es un mundo por descubrir! Para reforzar, puedes ver un video corto sobre la fotosíntesis y crear un mapa mental de la célula. ¡Verás cómo todo conecta!</li>`;
+      }
+      if (correctas.espanol < 2) {
+        recommendationsHTML += `
+          <li><strong>Español:</strong> ¡Vas por buen camino! Para mejorar aún más, te recomiendo practicar la identificación de oraciones compuestas y hacer ejercicios de clasificación de palabras. ¡Leer un poco cada día también ayuda mucho!</li>`;
+      }
+      if (correctas.historia < 2) {
+        recommendationsHTML += `
+          <li><strong>Historia:</strong> ¡La historia está llena de datos fascinantes! Para que no se te escape ninguno, te sugiero crear una línea de tiempo con las fechas más importantes y leer biografías cortas de personajes clave. ¡Te ayudará a recordarlos mejor!</li>`;
+      }
+
+      if (recommendationsHTML) {
+        recommendationsContainer.innerHTML = `
+          <div class="recommendations">
+            <h3>¡Ánimo! Aquí tienes unas sugerencias para mejorar:</h3>
+            <ul>${recommendationsHTML}</ul>
+          </div>`;
+      }
 
       new Chart(document.getElementById('doughnutChart'), {
         type: 'doughnut',
@@ -200,4 +255,5 @@
     });
   </script>
 </body>
+
 </html>
